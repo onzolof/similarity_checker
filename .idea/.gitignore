@@ -12,3 +12,4 @@ misc.xml
 modules.xml
 profiles_settings.xml
 *.iml
+/vcs.xml
