@@ -23,7 +23,7 @@ def calculate_similarity(model_name, text_a, text_b):
 
     # Calculate the cosine similarity between the embeddings
     similarity = cosine_similarity(embeddings[0].reshape(1, -1), embeddings[1].reshape(1, -1))
-    return round(similarity[0][0], 2)
+    return round(similarity[0][0] * 100, 0)
 
 
 for current_model_name in MODELS:

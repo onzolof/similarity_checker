@@ -25,14 +25,19 @@ Marc"""
 
 
 def calculate_similarity_score():
-    similarity = calculate_similarity(st.session_state.active_model, st.session_state.text_a, st.session_state.text_b)
-    st.session_state.similarity_score = "{:.2f}".format(similarity)
+    st.session_state.similarity_score = calculate_similarity(st.session_state.active_model, st.session_state.text_a, st.session_state.text_b)
 
 
 def model_switched():
     st.toast("Model switched", icon='ℹ')
     calculate_similarity_score()
 
+
+st.set_page_config(
+    page_title="Similarity-Checker",
+    page_icon="📚",
+    layout="wide",
+)
 
 st.title("Similarity Demo")
 
@@ -51,6 +56,10 @@ with col2_texts:
                                            on_change=calculate_similarity_score)
 
 if "similarity_score" in st.session_state:
-    st.markdown(f"Similarity Score: **{st.session_state.similarity_score}**")
-
-
+    score = int(st.session_state.similarity_score)
+    if score >= 80:
+        st.success("Similarity-Score: "+ str(score) + "%")
+    elif score >= 30:
+        st.warning("Similarity-Score: "+ str(score) + "%")
+    else:
+        st.error("Similarity-Score: "+ str(score) + "%")
