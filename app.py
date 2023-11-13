@@ -62,7 +62,7 @@ if "similarity_score" in st.session_state:
     score_as_string = "Similarity-Score: " + str(score) + "%"
     if score >= 80:
         st.success(score_as_string)
-    elif score >= 30:
+    elif score >= 50:
         st.warning(score_as_string)
     else:
         st.error(score_as_string)
