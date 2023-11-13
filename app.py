@@ -1,7 +1,5 @@
 import streamlit as st
-from model import MAX_TEXT_LENGTH, calculate_similarity
-
-st.title("Similarity Demo")
+from model import MAX_TEXT_LENGTH, calculate_similarity, MODELS
 
 value_a = """Dear Hanspeter,
 
@@ -25,15 +23,37 @@ Could you please inform your team as well as Martin about the decisions we made?
 Greetings,
 Marc"""
 
-col1, col2 = st.columns(2)
 
-with col1:
-    text_a = st.text_area("Text A", value=value_a, max_chars=MAX_TEXT_LENGTH, height=400)
+def calculate_similarity_score():
+    similarity = calculate_similarity(st.session_state.active_model, st.session_state.text_a, st.session_state.text_b)
+    st.session_state.similarity_score = "{:.2f}".format(similarity)
 
-with col2:
-    text_b = st.text_area("Text B", value=value_b, max_chars=MAX_TEXT_LENGTH, height=400)
 
-if st.button("Calculate Similarity"):
-    similarity = calculate_similarity(text_a, text_b)
-    formatted_similarity = "{:.2f}".format(similarity)
-    st.markdown(f"Similarity Score: **{formatted_similarity}**")
+def model_switched():
+    st.toast("Model switched", icon='ℹ')
+    calculate_similarity_score()
+
+
+st.title("Similarity Demo")
+
+st.session_state.active_model = st.selectbox("Model", MODELS, index=0, on_change=model_switched)
+
+st.markdown(f"[Model-Information](https://huggingface.co/{st.session_state.active_model})")
+
+col1_texts, col2_texts = st.columns(2)
+
+with col1_texts:
+    st.session_state.text_a = st.text_area("Text A", value=value_a, max_chars=MAX_TEXT_LENGTH, height=400,
+                                           on_change=calculate_similarity_score)
+
+with col2_texts:
+    st.session_state.text_b = st.text_area("Text B", value=value_b, max_chars=MAX_TEXT_LENGTH, height=400,
+                                           on_change=calculate_similarity_score)
+
+# if st.button("Calculate Similarity"):
+#     calculate_similarity_score()
+
+if "similarity_score" in st.session_state:
+    st.markdown(f"Similarity Score: **{st.session_state.similarity_score}**")
+
+
