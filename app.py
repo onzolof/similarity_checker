@@ -25,7 +25,8 @@ Marc"""
 
 
 def calculate_similarity_score():
-    st.session_state.similarity_score = calculate_similarity(st.session_state.active_model, st.session_state.text_a, st.session_state.text_b)
+    st.session_state.similarity_score = calculate_similarity(st.session_state.active_model, st.session_state.text_a,
+                                                             st.session_state.text_b)
 
 
 def model_switched():
@@ -57,9 +58,10 @@ with col2_texts:
 
 if "similarity_score" in st.session_state:
     score = int(st.session_state.similarity_score)
+    score_as_string = "Similarity-Score: " + str(score) + "%"
     if score >= 80:
-        st.success("Similarity-Score: "+ str(score) + "%")
+        st.success(score_as_string)
     elif score >= 30:
-        st.warning("Similarity-Score: "+ str(score) + "%")
+        st.warning(score_as_string)
     else:
-        st.error("Similarity-Score: "+ str(score) + "%")
+        st.error(score_as_string)
