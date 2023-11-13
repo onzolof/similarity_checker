@@ -50,9 +50,6 @@ with col2_texts:
     st.session_state.text_b = st.text_area("Text B", value=value_b, max_chars=MAX_TEXT_LENGTH, height=400,
                                            on_change=calculate_similarity_score)
 
-# if st.button("Calculate Similarity"):
-#     calculate_similarity_score()
-
 if "similarity_score" in st.session_state:
     st.markdown(f"Similarity Score: **{st.session_state.similarity_score}**")
 
