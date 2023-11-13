@@ -49,12 +49,13 @@ st.markdown(f"[Model-Information](https://huggingface.co/{st.session_state.activ
 col1_texts, col2_texts = st.columns(2)
 
 with col1_texts:
-    st.session_state.text_a = st.text_area("Text A", value=value_a, max_chars=MAX_TEXT_LENGTH, height=400,
-                                           on_change=calculate_similarity_score)
+    st.session_state.text_a = st.text_area("Text A", value=value_a, max_chars=MAX_TEXT_LENGTH, height=400)
 
 with col2_texts:
-    st.session_state.text_b = st.text_area("Text B", value=value_b, max_chars=MAX_TEXT_LENGTH, height=400,
-                                           on_change=calculate_similarity_score)
+    st.session_state.text_b = st.text_area("Text B", value=value_b, max_chars=MAX_TEXT_LENGTH, height=400)
+
+if st.button("Calculate Similarity"):
+    calculate_similarity_score()
 
 if "similarity_score" in st.session_state:
     score = int(st.session_state.similarity_score)
@@ -65,5 +66,3 @@ if "similarity_score" in st.session_state:
         st.warning(score_as_string)
     else:
         st.error(score_as_string)
-
-calculate_similarity_score()
