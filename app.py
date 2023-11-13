@@ -65,3 +65,5 @@ if "similarity_score" in st.session_state:
         st.warning(score_as_string)
     else:
         st.error(score_as_string)
+
+calculate_similarity_score()
